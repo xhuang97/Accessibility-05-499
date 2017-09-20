@@ -1,0 +1,133 @@
+html,body {
+  font-family: arial;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+.container {
+  margin: auto;
+  width: 800px;
+}
+
+.heading {
+  font-weight: bold;
+  font-size: 2em;
+  margin: 2em 0;
+}
+
+.heading2 {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: .6em 0;
+}
+
+h3 {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: .5em 0;
+}
+
+input,textarea {
+  font-size: 1.1em;
+}
+
+a {
+  text-decoration: none;
+  color: #0000FF;
+  text-decoration: underline;
+}
+
+.navigation a{
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: .5em 0;
+  padding: 3px;
+  top: 10px;
+  left: -40px;
+  position: relative;
+  color: black;
+  box-shadow: 0px 0px 1px 1px black;
+}
+
+ul#menu li {
+  display:inline;
+}
+
+ul#name li {
+  display:inline;
+}
+
+.nav:focus{
+  background-color: yellow;
+  width: 200;
+  box-shadow: 0px 0px 2px 3px red;
+}
+
+.link:focus{
+  width: 200;
+  box-shadow: 0px 0px 2px 3px red;
+  background-color: yellow;
+}
+
+input:focus{
+  background-color: yellow;
+}
+
+textarea:focus{
+  background-color: yellow;
+}
+
+#videoplayer {
+  background: white;
+  text-align: center;
+  position: relative;
+  top: -50px;
+  left: -280px;
+}
+
+#youtube{
+  background: white;
+  position: relative;
+  top: -50px;
+  left: 290px;
+}
+
+#udes{
+  position: relative;
+  background: white;
+  text-align: center;
+  top: -50px;
+  left: 290px;
+}
+
+.imglink:focus img{
+  box-shadow: 0px 0px 2px 3px red;
+}
+
+.error {
+  color: red;
+}
+
+#accessibilitybanner {
+  width: 857px;
+  height: 207px;
+  background-image: url(pics/finalbanner.png);
+}
+
+.submitbutton
+{
+	border-top:		2px solid #295200;
+	border-left:		2px solid #295200;
+	border-right:		2px solid #0505FF;
+	border-bottom:		2px solid #0505FF;
+	padding:		10px 20px;
+	font-size:		14px;
+	background-color:	#fff;
+	font-weight:		bold;
+	color:			#000;
+}
+
+.submitbutton:focus{
+  box-shadow: 0px 0px 2px 3px red;
+  background-color: yellow;
+}

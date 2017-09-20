@@ -1,0 +1,88 @@
+<?doctype html>
+<html lang="en">
+<head
+  <meta charset="utf-8">
+  <title>Accessibility Course Overview</title>
+  <link rel="stylesheet" href="project2.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="src/project2.js" ></script>
+</head>
+<body>
+<div class="container">
+<div role="navigation" class="navigation">
+  <ul id="menu">
+    <li><a class="nav" href="" target="_self">Home</a></li>
+    <li><a class="nav" href="#resources">Resources</a></li>
+    <li><a class="nav" href="#signup">Sign Up</a></li>
+  </ul>
+</div>
+
+<div role="banner" id="accessibilitybanner" tabindex="0"></div>
+<h1>Accessibility Overview</h1>
+
+<video role="main" tabindex="0" width="800" height="600" id="thevideo" poster="employment-graph.jpg" align="center">
+  <source src="employment-movie.mp4" type="video/mp4" alt="Employment Movie">
+  <track label="English" kind="subtitles" srclang="en" src="content/employmentmovie.vtt" default>
+</video>
+
+
+<button class="imglink" id="videoplayer" tabindex="0" role="button" aria-pressed="false">
+  <img id="playbutton" tabindex="-1" width="50px" height="50px" src="pics/play.png" alt="Playing">
+</button>
+
+<a class="imglink" href="https://youtu.be/eR-tXZz48Hc" id="youtube" >
+  <img src="pics/youtube.jpg" width="100px" height="50px" alt="View video on Youtube"></a>
+
+<a class="imglink" href="https://youdescribe.org/video/eR-tXZz48Hc" id="udes">
+  <img src="pics/youdescribe.png" width="50px" height="50px" alt="View video with description"></a>
+
+<div>
+  <p>Having trouble watching the video? &nbsp;
+      <a class="link" role="complementary" download href="videohelp.txt" tabindex="0">Video Description</a>
+  </p>
+</div>
+
+<hr>
+<div role="main" id="resources" tabindex="0" class="heading2"><h2>Resources</h2></div>
+<img src="pics/dot.png" alt="dot">&nbsp;<a class="link" href="http://accessibility.cs.cmu.edu">Accessibility Research at CMU</a><br>
+<img src="pics/dot.png" alt="dot">&nbsp;<a class="link" href="https://www.cmu.edu/hr/eos/disability/">Disability Services at CMU</a><br>
+<img src="pics/dot.png" alt="dot">&nbsp;<a class="link" href="http://www.hampsterdance.com/classics/originaldance.htm">Hampster Dance</a><br>
+
+<hr>
+<div role="main" id="signup" tabindex="0" class="heading2"><h2>Sign Up!</h2></div>
+<form role="main" id="sign-up-form">
+
+
+<div id="name"><h3>Name</h3>
+    <span id="fnlb">First Name: &nbsp;
+    <input name="first name" type="text" size="10" id="fn" aria-labelledby="fnlb"></span>
+    <span id="milb">&nbsp; Middle Initial: &nbsp;
+    <input name="middle initial" type="text" size="1" id="mi" aria-labelledby="milb">.</span>
+    <span id="lnlb">&nbsp; Last Name: &nbsp;
+    <input name="last name" type="text" size="10" id="ln" aria-labelledby="lnlb"></span>
+</div>
+
+<p>
+  <div id="email"><h3>Email</h3></div>
+  <input id="em" type="text" size="20" aria-labelledby="email">
+</p>
+<p>
+  <h3>Subscription</h3>
+  <span id="spamtext">Would you like to receive occassional emails with offers from us?</span><br>
+  <span id="receivespambutton" class="imglink" type="checkbox" role="checkbox" aria-checked="true" tabindex="0">
+    <img src="pics/checked.png" alt="checkbox">
+  </span>
+</p>
+
+  <div id="commentlabel"><h3>Comments</h3></label>
+<p>
+  <textarea id="comment" rows="5" cols="40" aria-labelledby="commentlabel"></textarea>
+</p>
+ <button class="submitbutton" type="button" role="button" aria-pressed="false" id="signupbutton">
+   Sign Up!
+ </button>
+</form>
+
+</div><!-- end div.container -->
+</body>
+</html>

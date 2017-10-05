@@ -15,6 +15,8 @@ $(document).ready(function() {
       setToPaused();
     } if(e.key=='h' && e.ctrlKey) {
       findNextHeading();
+    } if(e.key=='g' && e.ctrlKey) {
+      findPreviousHeading();
     } if(e.key=="r" && (e.metaKey || e.ctrlKey)){
       setToPaused();
       readFromBeginning();
@@ -111,9 +113,31 @@ function findNextHeading() {
 
 
   console.log(afters);
+
   speakMe(afters[0]);
 }
 
+function findPreviousHeading() {
+    var all = 'h1,h2,h3,h4,h5,h6';
+    var currentelem = allelements[currentelem_index];
+    var index;
+
+    if(currentelem==null) {
+      currentelem = $("body");
+    }
+
+    var afters = $(all).add(currentelem).each(function (i) {
+      if ($(this).is(currentelem)) {
+        index = i - 1;
+        return false; // quit looping early
+      }
+    }).slice(index + 1);
+
+
+    console.log(afters);
+    speakMe(afters[0]);
+
+}
 
 function doesItSpeak(elem) {
   console.log($(elem)[0].tagName);

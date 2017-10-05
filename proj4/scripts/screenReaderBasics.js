@@ -59,8 +59,8 @@ function readFromBeginning() {
 function readFromEnding() {
   allelements = $("*");
   currentelem_index = allelements.length - 1;
-  console.log("length of allelements: " ^ currentelem_index)
-  currentstate = "READING";
+
+  currentstate = "READINGBACKWARD";
   findThePreviousOne();
 }
 
@@ -68,13 +68,11 @@ function findThePreviousOne() {
   do {
     var currentelem = allelements[currentelem_index];
     currentelem_index--;
-
-    /* do we need to change this so that it reads till the last element? */
-    if(currentelem_index<1) {
+    console.log(currentelem_index)
+    if(currentelem_index<2) {
       break;
     }
   } while(!doesItSpeak(currentelem));
-
   speakMe(currentelem);
 }
 
@@ -88,12 +86,10 @@ function findTheNextOne() {
     var currentelem = allelements[currentelem_index];
     currentelem_index++;
 
-    /* do we need to change this so that it reads till the last element? */
-    if(currentelem_index>1000) {
+    if(currentelem_index>100) {
       break;
     }
   } while(!doesItSpeak(currentelem));
-
   speakMe(currentelem);
 }
 
@@ -120,24 +116,9 @@ function findNextHeading() {
 
 
 function doesItSpeak(elem) {
-  if($(elem)[0].tagName){
-    var tagname = $(elem)[0].tagName;
-    if(tagname == "P" || tagname == "A") {
-      console.log($(elem)[0].tagName);
-      return true;
-    }
-    else
-    if (tagname == "DIV" || tagname == "SPAN") {
-      var len = $(elem).children().length
-      for (i = 0; i < len; i++){
-        element = allelements[currentelem_index+i]
-        var tagname = $(element)[0].tagName;
-        if(tagname == "P" || tagname == "A") {
-          return true;
-        }
-      }
-      currentelem_index+=len;
-    }
+  console.log($(elem)[0].tagName);
+  if($(elem)[0].tagName == "A") {
+    return true;
   }
   return false;
 }
@@ -148,6 +129,8 @@ function speak(text) {
     if(currentstate=="READING") {
       findTheNextOne();
     } else if(currentstate=="READONEBACK") {
+      findThePreviousOne();
+    } else if(currentstate=="READINGBACKWARD"){
       findThePreviousOne();
     }
   }
@@ -162,7 +145,6 @@ function speakMe(elem) {
   }, 200);
 
   speak($(elem).text())
-
   /*var u = new SpeechSynthesisUtterance("another thing"); //$(elem).text());
   u.onend = function(event) {
     console.log("onend event triggered")

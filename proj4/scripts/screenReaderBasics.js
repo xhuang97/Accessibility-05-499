@@ -1,16 +1,17 @@
 var allelements = null;
 var currentelem_index = 0;
 var currentstate = "PAUSED";  // READING, READINGBACKWARD, READONEFORWARD, READONEBACK
-
+var lasttabable = 0;
 var u;
-
-//$(":focusable")
 
 
 $(document).ready(function() {
   readFromBeginning();
 
   $(document).keydown(function(e) {
+    e.preventDefault();
+
+
     if(e.key=="Escape") {
       setToPaused();
     } if(e.key=='h' && e.ctrlKey) {
@@ -30,17 +31,37 @@ $(document).ready(function() {
   });
 
   $('a').click(function() {
+
     setToPaused();
     readFromBeginning();
   });
 
-  $("input,texarea").keydown(function(e) {
+  $("input,textarea").keydown(function(e) {
+    e.preventDefault();
     var keytospeak = e.key;
     if(/[a-z0-9\s]/i.test(keytospeak)) {
       setToPaused();
       speak(keytospeak);
     }
-  })
+  });
+
+  $("a").keydown(function (e) {
+
+    if (e.keyCode == 9 && e.shiftKey) {
+      $("a").html(this.value);
+      // $(allelements[lasttabable]).focus()
+      findThePreviousOne();
+      console.log("heeeloo????")
+      e.preventDefault();
+    }
+    if (e.keyCode == 9){
+      $("a").html(this.value);
+      $("a").focus();
+      findTheNextOne();
+      e.preventDefault();
+    }
+  });
+
 });
 
 function setToPaused() {
@@ -70,12 +91,15 @@ function findThePreviousOne() {
   do {
     var currentelem = allelements[currentelem_index];
     currentelem_index--;
-    console.log(currentelem_index)
+
     if(currentelem_index<2) {
       break;
     }
   } while(!doesItSpeak(currentelem));
   speakMe(currentelem);
+  console.log("find the previous oneeeeeee")
+  console.log(lasttabable)
+  $(allelements[lasttabable]).focus()
 }
 
 /**
@@ -93,6 +117,10 @@ function findTheNextOne() {
     }
   } while(!doesItSpeak(currentelem));
   speakMe(currentelem);
+  lasttabable = currentelem_index
+  console.log("find the next oneeeeeee")
+  console.log(lasttabable )
+
 }
 
 function findNextHeading() {
@@ -149,30 +177,26 @@ function doesItSpeak(elem) {
 
 function speak(text) {
   u = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(u);
   u.onend = function(event) {
     if(currentstate=="READING") {
       findTheNextOne();
-    } else if(currentstate=="READONEBACK") {
-      findThePreviousOne();
+
     } else if(currentstate=="READINGBACKWARD"){
       findThePreviousOne();
     }
   }
-  speechSynthesis.speak(u);
+
 }
 
 function speakMe(elem) {
   $(elem).focus();
 
+  $(elem).addClass('highlight');
   $('html, body').animate({
     scrollTop: $(elem).offset().top
   }, 200);
 
   speak($(elem).text())
-  /*var u = new SpeechSynthesisUtterance("another thing"); //$(elem).text());
-  u.onend = function(event) {
-    console.log("onend event triggered")
-    //findTheNextOne();
-  }
-  speechSynthesis.speak(u);*/
+  $(".highlight").removeClass('highlight');
 }

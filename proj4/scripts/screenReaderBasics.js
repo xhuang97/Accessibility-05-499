@@ -1,7 +1,6 @@
 var allelements = null;
 var currentelem_index = 0;
 var currentstate = "PAUSED";  // READING, READINGBACKWARD, READONEFORWARD, READONEBACK
-var lasttabable = 0;
 var u;
 
 
@@ -18,9 +17,6 @@ $(document).ready(function() {
       findNextHeading();
     } if(e.key=='g' && e.ctrlKey) {
       findPreviousHeading();
-    } if(e.key=="r" && (e.metaKey || e.ctrlKey)){
-      setToPaused();
-      readFromBeginning();
     } if(e.key=="j" && e.ctrlKey) {
       setToPaused();
       readFromBeginning();
@@ -36,8 +32,8 @@ $(document).ready(function() {
     readFromBeginning();
   });
 
-  $("input,textarea").keydown(function(e) {
-    e.preventDefault();
+  $("input:visible,select:visible").keyup(function(e) {
+    // e.preventDefault();
     var keytospeak = e.key;
     if(/[a-z0-9\s]/i.test(keytospeak)) {
       setToPaused();
@@ -45,16 +41,20 @@ $(document).ready(function() {
     }
   });
 
-  $("a").keydown(function (e) {
+  $("input").keydown(function (e) {
 
     if (e.keyCode == 9 && e.shiftKey) {
+      currentstate = "READONEBACK"
       $("a").html(this.value);
-      // $(allelements[lasttabable]).focus()
+
       findThePreviousOne();
-      console.log("heeeloo????")
+      findThePreviousOne();
+
+      $(allelements[currentelem_index]).focus();
       e.preventDefault();
     }
     if (e.keyCode == 9){
+      currentstate = "READONEFORWARD"
       $("a").html(this.value);
       $("a").focus();
       findTheNextOne();
@@ -96,10 +96,8 @@ function findThePreviousOne() {
       break;
     }
   } while(!doesItSpeak(currentelem));
-  speakMe(currentelem);
-  console.log("find the previous oneeeeeee")
-  console.log(lasttabable)
-  $(allelements[lasttabable]).focus()
+
+    speakMe(currentelem);
 }
 
 /**
@@ -116,10 +114,8 @@ function findTheNextOne() {
       break;
     }
   } while(!doesItSpeak(currentelem));
-  speakMe(currentelem);
-  lasttabable = currentelem_index
-  console.log("find the next oneeeeeee")
-  console.log(lasttabable )
+    speakMe(currentelem);
+
 
 }
 
@@ -169,7 +165,7 @@ function findPreviousHeading() {
 
 function doesItSpeak(elem) {
   console.log($(elem)[0].tagName);
-  if($(elem)[0].tagName == "A") {
+  if($(elem)[0].tagName == "A" ) {
     return true;
   }
   return false;
@@ -181,7 +177,6 @@ function speak(text) {
   u.onend = function(event) {
     if(currentstate=="READING") {
       findTheNextOne();
-
     } else if(currentstate=="READINGBACKWARD"){
       findThePreviousOne();
     }

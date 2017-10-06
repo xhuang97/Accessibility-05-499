@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "🔥Screen Reader™",
+  "name": "№1 Awesome Fire™: 🔥Speedy Access Reader🔥",
   "minimum_chrome_version": "24.0.1307.0",
   "version": "0.0.1",
   "homepage_url": "http://www.accessibilitycourse.com",
@@ -20,12 +20,11 @@
     {
       "matches": [
         "http://www.accessibilitycourse.com/*",
-        "https://www.hcii.cmu.edu/",
-        "https://stackoverflow.com/questions/*"
+        "http://accessibilitycourse.com/examples/reformat.html"
       ],
       "js": [
           "scripts/jquery.min.js",
-          "scripts/screenReaderBasics.js"
+          "scripts/sample.js"
       ],
       "css": ["css/reader.css"],
       "run_at": "document_idle"

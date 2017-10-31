@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "🔥Magnifier🔥",
+  "name": "🔥Image Labeler🔥",
   "minimum_chrome_version": "24.0.1307.0",
   "version": "0.0.1",
   "homepage_url": "http://www.accessibilitycourse.com",
@@ -19,12 +19,11 @@
   "content_scripts": [
     {
       "matches": [
-        "http://www.accessibilitycourse.com/*",
-        "http://accessibilitycourse.com/examples/reformat.html"
+        "http://www.accessibilitycourse.com/*"
       ],
       "js": [
           "scripts/jquery.min.js",
-          "scripts/sample.js"
+          "scripts/reader.js"
       ],
       "css": ["css/reader.css"],
       "run_at": "document_idle"

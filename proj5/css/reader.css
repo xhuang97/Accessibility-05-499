@@ -22,3 +22,10 @@
   left: 0;
   top: 0;
 }
+
+.body{
+  position: relative;
+    width: 400px;
+    height: 200px;
+    overflow: auto;
+}

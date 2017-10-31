@@ -7,7 +7,6 @@ $(document).ready(function(){
 
       text = $(this).text();
 
-
       var tagname = this.tagName.toLowerCase();
       if (tagname == 'img'){
         if($(this).attr('title') && text == ""){
@@ -41,15 +40,5 @@ $(document).ready(function(){
       text = "";
     }
   );
-
-  $('img').each(function() {
-    if($(this).is('img:not[alt]') {  // image does not have alt text
-        img.attr("alt", "the new alt text")
-      } else if($(this).attr("alt")=="") { // image has empty alt text
-        img.attr("alt", "the new alt text")
-      } else {  // image has some alt text defined
-    }
-  })
-
 
 });

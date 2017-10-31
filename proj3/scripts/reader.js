@@ -42,14 +42,4 @@ $(document).ready(function(){
     }
   );
 
-  $('img').each(function() {
-    if($(this).is('img:not[alt]') {  // image does not have alt text
-        img.attr("alt", "the new alt text")
-      } else if($(this).attr("alt")=="") { // image has empty alt text
-        img.attr("alt", "the new alt text")
-      } else {  // image has some alt text defined
-    }
-  })
-
-
 });

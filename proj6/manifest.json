@@ -17,16 +17,21 @@
       "128": "fire.png"
   },
   "content_scripts": [
-    {
-      "matches": [
-        "http://www.accessibilitycourse.com/*"
-      ],
-      "js": [
-          "scripts/jquery.min.js",
-          "scripts/reader.js"
-      ],
-      "css": ["css/reader.css"],
-      "run_at": "document_idle"
-    }
-  ]
+     {
+       "matches": [
+         "*://*/*"
+       ],
+       "js": [
+           "scripts/jquery.min.js",
+           "scripts/tesseract.js",
+           "scripts/ocr.js",
+           "scripts/require.js"
+       ],
+       "css": ["css/reader.css"],
+       "run_at": "document_idle"
+     }
+   ],
+   "permissions": [
+     "*://*/*"
+ ]
 }

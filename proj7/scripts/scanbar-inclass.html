@@ -1,6 +1,7 @@
 <!doctype html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="keyboard.css">
 <script>
 
 var horizontalmovement = "ydown"; // up
@@ -9,6 +10,11 @@ var state = "none";  // verticalscan, horizontalscan, none
 var interval = null;
 var barspeed = 5
 var scrollheight = 0
+var showkeyboard = false
+var lasttext = null;
+var shifton = false
+var capson = false
+var done = true
 
 $(document).ready(function() {
   $("#thebutton").click(function() {
@@ -30,6 +36,56 @@ $(document).ready(function() {
     }, 1000);
     scrollheight += 200
   })
+count = 0
+  $('.key:not(".backspace"):not(".shift"):not(".caps"):not(".space1")').click(function() {
+    var newchar = $(this).text().trim();
+    if (!done){
+      if (newchar.length > 1 && shifton){
+        $(lasttext).val($(lasttext).val() + newchar.substring(0,1));
+        // console.log("added!" + newchar);
+      } else if (newchar.length > 1 && !shifton){
+        $(lasttext).val($(lasttext).val() + newchar.substring(1,2));
+        // console.log("added!" + newchar);
+      } else if (newchar.length <= 1 && capson){
+        // newchar = newchar.toUpperCase();
+        $(lasttext).val($(lasttext).val() + newchar.toUpperCase());
+        // console.log("added!" + newchar);
+      } else{
+        // newchar = newchar.toLowerCase();
+        $(lasttext).val($(lasttext).val() + newchar.toLowerCase());
+        // console.log("added!" + newchar);
+      }
+    }
+    done = true
+  });
+
+  $('.key.space1').click(function(){
+    str = $(lasttext).val();
+    $(lasttext).val( str+ " ");
+  })
+
+  $('.key.backspace').click(function() {
+    str = $(lasttext).val();
+    //console.log("str: " + str)
+    newstr = str.substring(0, str.length -1);
+    //console.log("newstr: " + newstr)
+    $(lasttext).val(newstr);
+    //console.log($(lasttext).val());
+  });
+
+  $('.key.shift').click(function() {
+    console.log("shifton: " + shifton)
+    shifton = !shifton;
+  });
+
+  $('.key.caps').click(function() {
+    console.log("capson: " + capson)
+    capson = !capson;
+  });
+
+  $("input[type='text'],textarea").click(function(){
+    lasttext = $(this);
+  });
 
 
   $(document).keydown(function(e) {
@@ -40,6 +96,18 @@ $(document).ready(function() {
     if (e.key=="s"){
       e.preventDefault();
       barspeed -=5
+    }
+
+    if (e.key=="k" || e.keycode == 75){
+      console.log("showkeyboard: " + showkeyboard)
+      e.preventDefault();
+      if (!showkeyboard){
+        showkeyboard = true
+        $(".keyboard").css("visibility", "visible")
+      } else if (showkeyboard){
+        $(".keyboard").css("visibility", "hidden");
+        showkeyboard = false
+      }
     }
 
     	if(e.key=="b") {
@@ -143,9 +211,13 @@ $(document).ready(function() {
           }, 700, function() {
             $(".click").hide();
             var elementtoclick = document.elementFromPoint(x, y);
-            simulateClick(elementtoclick);
+            if ($(elementtoclick).is("input[type='text'],textarea")){
+              simulateType(elementtoclick)
+            } else{
+              simulateClick(elementtoclick);
+            }
           });
-
+          done = false
           $("#horizontal-scanbar").hide();
           $("#vertical-scanbar").hide();
           $("#horizontal-scanbar").css("top", 0+"px");
@@ -167,6 +239,20 @@ function simulateClick(element) {
   dispatchEvent(element, 'click');
   dispatchEvent(element, 'mouseup');
 };
+
+function simulateType(elem) {
+  if (!elem) return;
+  // var keyEvent = document.createEvent('KeyEvents');
+  // $(document).dispatchEvent(new KeyboardEvent('keydown',{'key':'k'}));
+
+  var e = $.Event('keydown');
+  e.which = 75; // k
+  e.key = 'k'
+  $(document).trigger(e);
+  // console.log(e)
+  lasttext = elem;
+};
+
 </script>
 <style>
 .scanbar {
@@ -241,6 +327,140 @@ function simulateClick(element) {
 
 <div class="scanbar" id="horizontal-scanbar"></div>
 <div class="scanbar" id="vertical-scanbar"></div>
+<div class="keyboard" id="keyboard">
+<div class="section-a">
+  <div class="key"> ~! </div>
+  <div class="key">!1</div>
+<div class="key">
+  @2
+  </div><div class="key">
+  #3
+  </div><div class="key">
+  $4
+  </div><div class="key">
+  %5
+</div>  <div class="key">
+  ^6
+</div>  <div class="key">
+  &amp;7
+  </div><div class="key">
+  *8
+  </div><div class="key">
+  (9
+</div>  <div class="key">
+  )0
+</div>  <div class="key">
+  _-
+</div>  <div class="key">
+  +=
+</div><div class="key backspace">
+  Backspace
+</div>
+<div class="key tab">
+  Tab
+  </div><div class="key">
+  Q
+  </div><div class="key">
+  W
+</div>  <div class="key">
+  E
+  </div><div class="key">
+  R
+  </div><div class="key">
+  T
+</div>  <div class="key">
+  Y
+</div>  <div class="key">
+  U
+</div>  <div class="key">
+  I
+  </div><div class="key">
+  O
+</div>  <div class="key">
+  P
+</div>  <div class="key">
+  {[
+  </div><div class="key">
+  }]
+</div>  <div class="key">
+  |\
+</div>  <div class="key caps">
+  Caps Lock
+</div>  <div class="key">
+  A
+  </div><div class="key">
+  S
+  </div><div class="key">
+  D
+  </div><div class="key">
+  F
+  </div><div class="key">
+  G
+  </div><div class="key">
+  H
+</div>  <div class="key">
+  J
+  </div><div class="key">
+  K
+  </div><div class="key">
+  L
+  </div><div class="key">
+  :;
+</div>  <div class="key">
+  "'
+</div>  <div class="key enter">
+  Enter
+</div>  <div class="key shift left">
+  Shift
+</div>  <div class="key">
+  Z
+</div>  <div class="key">
+  X
+</div>  <div class="key">
+  C
+</div>  <div class="key">
+  V
+</div>  <div class="key">
+  B
+</div>  <div class="key">
+  N
+</div>  <div class="key">
+  M
+</div>  <div class="key">
+  &lt;,
+</div>  <div class="key">
+  &gt;.
+</div>  <div class="key slash">
+  ?/
+</div>  <div class="key shift right">
+  Shift
+</div>  <div class="key ctrl">
+  Ctrl
+</div>  <div class="key">
+  ♥
+</div>  <div class="key alt">
+  Alt
+</div>
+<div class="key space1">
+  Space
+</div>
+<div class="key ctrl">
+  Cmd
+</div>
+<div class="key arrows small">
+  &#8592;
+</div>
+<div class="key arrows small">
+  &#8593;
+</div>
+<div class="key arrows small">
+  &#8594;
+</div>
+<div class="key arrows small">
+  &#8595;
+</div>
+
+</div>
 
 </body>
 </html>

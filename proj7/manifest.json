@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "№1 Awesome Fire™: 🔥Speedy Access Reader🔥",
+  "minimum_chrome_version": "24.0.1307.0",
+  "version": "0.0.1",
+  "homepage_url": "http://www.accessibilitycourse.com",
+  "browser_action": {
+    "default_icon": {
+      "16": "fire.png",
+      "48": "fire.png",
+      "128": "fire.png"
+    }
+  },
+  "icons": {
+      "16": "fire.png",
+      "48": "fire.png",
+      "128": "fire.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.accessibilitycourse.com/*"
+      ],
+      "js": [
+          "scripts/jquery.min.js",
+          "scripts/reader.js"
+      ],
+      "css": ["css/reader.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

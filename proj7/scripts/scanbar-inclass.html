@@ -1,0 +1,246 @@
+<!doctype html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+var horizontalmovement = "ydown"; // up
+var verticalmovement = "xright"; // left, right
+var state = "none";  // verticalscan, horizontalscan, none
+var interval = null;
+var barspeed = 5
+var scrollheight = 0
+
+$(document).ready(function() {
+  $("#thebutton").click(function() {
+  	alert("I was clicked!");
+  })
+
+  $("body").append("<input type='button' class='scrollup' value='&#x25B2'>");
+  $(".scrollup").click(function() {
+    $('html, body').animate({
+        scrollTop: $(document).scrollTop()-200
+    }, 1000);
+    scrollheight -= 200
+  })
+
+  $("body").append("<input type='button' class='scrolldown' value='&#x25BC'>");
+  $(".scrolldown").click(function() {
+    $('html, body').animate({
+        scrollTop: $(document).scrollTop()+200
+    }, 1000);
+    scrollheight += 200
+  })
+
+
+  $(document).keydown(function(e) {
+    if (e.key=="f"){
+      e.preventDefault();
+      barspeed +=5
+    }
+    if (e.key=="s"){
+      e.preventDefault();
+      barspeed -=5
+    }
+
+    	if(e.key=="b") {
+        clearInterval(interval);
+        barspeed = 5
+        // none -> vertical -> horizontal -> none -> etc.
+        if(state=="none") {
+          clearInterval(interval);
+          barspeed = 5
+
+          state = "verticalscan";
+          $("#horizontal-scanbar").show();
+
+          // Setting up the vertical scan
+      	  interval = setInterval(function() {
+      	  	var offset = $("#horizontal-scanbar").offset();
+      	  	var y = offset.top - scrollheight;
+
+      	  	if(y >= $(window).height()) {
+      	  	  horizontalmovement = "yup";
+              //console.log("exceeded height")
+              //console.log("y is: " + y + " horizontalmovement: " + horizontalmovement)
+      	  	} else if(y <= 0) {
+      	  	  horizontalmovement = "ydown";
+      	  	}
+
+      	  	if(horizontalmovement=="ydown") {
+      	  	  y = y+barspeed;
+              //console.log("barspeed: " + barspeed)
+              //console.log("new y is " + y + " " + $(window).height());
+
+        	  	$("#horizontal-scanbar").css("top", y+"px");
+              //console.log("after changing css: y = " + offset.top)
+      	    } else if(horizontalmovement=="yup") {
+      	      y = y-barspeed;
+              //console.log("barspeed: " + barspeed)
+              //console.log("new y is " + y + " " + $(window).height());
+
+        	  	$("#horizontal-scanbar").css("top", y+"px");
+              //console.log("after changing css: y = " + offset.top)
+      	    }
+
+
+      	  }, 100);
+    	  } else if(state=="verticalscan") {
+          barspeed = 5
+
+          state = "horizontalscan";
+          $("#vertical-scanbar").show();
+
+          // Setting up the vertical scan
+          interval = setInterval(function() {
+            var offset = $("#vertical-scanbar").offset();
+            var x = offset.left;
+
+
+            if(x >= $(window).width()) {
+              verticalmovement = "xleft";
+              // console.log("exceeded width")
+              // console.log("x is: " + x + " verticalmovement: " + verticalmovement)
+            } else if(x <= 0) {
+              verticalmovement = "xright";
+            }
+
+            if(verticalmovement=="xright") {
+              x = x+barspeed;
+              // console.log("new x is " + x + " " + $(window).width());
+              $("#vertical-scanbar").css("left", x+"px");
+            } else if(verticalmovement=="xleft") {
+
+              // console.log("old x: " + x);
+              x = x-barspeed;
+              // console.log("new x is " + x + " " + $(window).width());
+              $("#vertical-scanbar").css("left", x+"px");
+              // console.log("after changing css: x = " + offset.left)
+            }
+
+          }, 100);
+        } else if(state=="horizontalscan") {
+          state = "none"
+          var offset = $("#vertical-scanbar").offset();
+          var x = offset.left + $("#vertical-scanbar").width()/2.0;
+
+          var offset = $("#horizontal-scanbar").offset();
+          var y = offset.top + $("#horizontal-scanbar").height()/2.0 - scrollheight;
+          // console.log("click x : " + x+ " click y: " + y)
+
+
+          $("body").append("<div class='click'></div>");
+
+          $(".click").css("left", x+"px");
+          $(".click").css("top", y+"px");
+
+          $(".click").animate({
+            width: "+=50",
+            height: "+=50",
+            left: "-=25",
+            top: "-=25",
+            opacity: '0.3',
+            "border-radius": "+=25"
+          }, 700, function() {
+            $(".click").hide();
+            var elementtoclick = document.elementFromPoint(x, y);
+            simulateClick(elementtoclick);
+          });
+
+          $("#horizontal-scanbar").hide();
+          $("#vertical-scanbar").hide();
+          $("#horizontal-scanbar").css("top", 0+"px");
+          $("#vertical-scanbar").css("left", 0+"px");
+        }
+    	}
+  })
+})
+
+function simulateClick(element) {
+  if (!element) return;
+  var dispatchEvent = function (elt, name) {
+    var clickEvent = document.createEvent('MouseEvents');
+    clickEvent.initEvent(name, true, true);
+    elt.dispatchEvent(clickEvent);
+  };
+  dispatchEvent(element, 'mouseover');
+  dispatchEvent(element, 'mousedown');
+  dispatchEvent(element, 'click');
+  dispatchEvent(element, 'mouseup');
+};
+</script>
+<style>
+.scanbar {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: none;
+}
+#horizontal-scanbar {
+  width: 100%;
+  height: 5px;
+  border-top: 2px solid #555555;
+  border-bottom: 2px solid #555555;
+  box-shadow: 0px 4px 3px rgba(255, 255, 255, 0.75), 0px -4px 3px rgba(255, 255, 255, 0.75);
+}
+#vertical-scanbar {
+  height: 100%;
+  width: 5px;
+  border-left: 2px solid #555555;
+  border-right: 2px solid #555555;
+  box-shadow: 4px 0px 3px rgba(255, 255, 255, 0.75), -4px 0px 3px rgba(255, 255, 255, 0.75);
+}
+.click {
+  position: fixed;
+  z-index: 105;
+  border: 1.5px solid #B22222;
+  border-radius: 2px;
+  width: 1px;
+  height: 1px;
+}
+.scrollup {
+  position: fixed;
+  left: 50px;
+  top: 200px;
+  width: 50px;
+  height: 50px;
+  background: #FFFFFF;
+  color: #000;
+  text-align: center;
+  z-index: 98;
+}
+.scrolldown {
+  position: fixed;
+  left: 50px;
+  top: 250px;
+  width: 50px;
+  height: 50px;
+  background: #FFFFFF;
+  color: #000;
+  text-align: center;
+  z-index: 98;
+}
+</style>
+
+</head>
+<body>
+
+<p>
+<input id="thebutton" type="button" value="I'm a button">
+</p>
+
+<p>
+<a href="http://www.cmu.edu">Carnegie Mellon University</a>
+</p>
+
+<p>
+  <input type="text" value="whatever">
+</p>
+
+<img src="http://theoutpostbaltimore.com/wp-content/uploads/2017/08/Outpost-Rabbit.jpg" alt="no alt because I'm a jerk">
+
+<div class="scanbar" id="horizontal-scanbar"></div>
+<div class="scanbar" id="vertical-scanbar"></div>
+
+</body>
+</html>

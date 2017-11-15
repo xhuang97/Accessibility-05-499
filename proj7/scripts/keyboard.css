@@ -70,8 +70,8 @@ body{
 
 .function{font-size: 12px; width:30px; height:30px; margin-bottom:15px;}
 .small{font-size:15px; width:17px; text-align: center; padding-top: 5px; padding-right: 3px; height:35px;}
-.space1{width:400px; }
-.space2{margin-right: 25px !important;}
+.space1{width:400px; text-align: center;}
+.space2{margin-right: 25px ;text-align: center; !important;}
 .dual {font-size: 14px; line-height: 20px; width:30px; }
 .backspace {width:84px; font-size: 12px;}
 .tab {width: 50px; line-height: 40px; font-size:13px;}
@@ -82,7 +82,7 @@ body{
 .shift.left{width: 90px;line-height: 40px; font-size:13px;}
 .shift.right{width: 104px;line-height: 40px; font-size:13px;}
 .ctrl{width: 50px; line-height: 40px; font-size:13px;}
-.space{width:234px;}
+.space{width:234px;text-align: center;}
 .arrows{position:relative;}
 .sec-func .key{width: 32px; font-size:10px; text-align:left; line-height:40px; float:left;}
 .sec-func div.dual{line-height:20px;}

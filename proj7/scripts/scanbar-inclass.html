@@ -15,8 +15,13 @@ var lasttext = null;
 var shifton = false
 var capson = false
 var done = true
+var virtualclick = false
+
 
 $(document).ready(function() {
+  // $("body").append("<div class='keyboard' id='keyboard'> </div>");
+  // $("#keyboard").load("keyboard.html")
+
   $("#thebutton").click(function() {
   	alert("I was clicked!");
   })
@@ -37,9 +42,19 @@ $(document).ready(function() {
     scrollheight += 200
   })
 count = 0
+
+  // $('.key:not(".backspace"):not(".shift"):not(".caps"):not(".space1")').keydown(function() {
+
   $('.key:not(".backspace"):not(".shift"):not(".caps"):not(".space1")').click(function() {
+    console.log("detected click")
+    console.log("lasttext:" + $(lasttext).val())
     var newchar = $(this).text().trim();
-    if (!done){
+    console.log("newchar: " + newchar)
+    b = true
+    if (virtualclick){
+      b = !done
+    }
+    if (b){
       if (newchar.length > 1 && shifton){
         $(lasttext).val($(lasttext).val() + newchar.substring(0,1));
         // console.log("added!" + newchar);
@@ -57,6 +72,7 @@ count = 0
       }
     }
     done = true
+    virtualclick = false
   });
 
   $('.key.space1').click(function(){
@@ -103,6 +119,8 @@ count = 0
       e.preventDefault();
       if (!showkeyboard){
         showkeyboard = true
+        // $("body").append("<div class='keyboard' id=keyboard> </div>");
+        // $("#keyboard").load("http://accessibilitycourse.com/projects/project7/keyboard.html")
         $(".keyboard").css("visibility", "visible")
       } else if (showkeyboard){
         $(".keyboard").css("visibility", "hidden");
@@ -218,6 +236,7 @@ count = 0
             }
           });
           done = false
+          virtualclick = true
           $("#horizontal-scanbar").hide();
           $("#vertical-scanbar").hide();
           $("#horizontal-scanbar").css("top", 0+"px");

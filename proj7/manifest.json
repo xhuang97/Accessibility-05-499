@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "№1 Awesome Fire™: 🔥Speedy Access Reader🔥",
+  "name": "№1 Awesome Fire™: 🔥Voice Recogition🔥",
   "minimum_chrome_version": "24.0.1307.0",
   "version": "0.0.1",
   "homepage_url": "http://www.accessibilitycourse.com",
@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": [
-        "http://www.accessibilitycourse.com/*"
+        "https://xhuang97.github.io/*"
       ],
       "js": [
           "scripts/jquery.min.js",

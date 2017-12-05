@@ -21,21 +21,6 @@ $(document).ready(function() {
   	alert("I was clicked!");
   })
   $("body").append("<div class='scanbar' id='horizontal-scanbar'></div><div class='scanbar' id='vertical-scanbar'></div>")
-  $("body").append("<input type='button' class='scrollup' value='&#x25B2'>");
-  $(".scrollup").click(function() {
-    $('html, body').animate({
-        scrollTop: $(document).scrollTop()-200
-    }, 1000);
-
-  })
-
-  $("body").append("<input type='button' class='scrolldown' value='&#x25BC'>");
-  $(".scrolldown").click(function() {
-    $('html, body').animate({
-        scrollTop: $(document).scrollTop()+200
-    }, 1000);
-
-  })
 count = 0
 
   // $('.key:not(".backspace"):not(".shift"):not(".caps"):not(".space1")').keydown(function() {
